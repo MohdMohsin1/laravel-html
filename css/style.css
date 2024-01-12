@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.code {
+  display: flex;
+  justify-content: space-between;
+  font-family: Consolas, "courier new";
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 10px 10px;
+  font-size: 105%;
+}
+
+.copybtn {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(45, 207, 72, 0.233);
+  color: rgb(0, 0, 0);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+}
+
+.list ul {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.list ul li {
+  width: 100%;
+}
+
+.list ul li a {
+  text-decoration: none;
+  color: white;
+}
+
+.list ul li:hover {
+  background-color: #0ec671;
+}
+
+.s-active {
+  background-color: #0ec671;
+}
