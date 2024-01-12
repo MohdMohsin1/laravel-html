@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Authentication system with bootstrap ui</title>
+    <title>Send Mail with laravel</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -113,21 +113,20 @@
     <div class="row">
         <div class="col-md-2 bg-success shadow-lg list">
             <ul>
-                <li class=" py-3 shadow  ps-3 s-active"><a href="index.html">Authentication System</a></li>
-                <li class=" py-3 shadow ps-3 "><a href="mailsystem.html">Mail System</a></li>
+                <li class=" py-3 shadow  ps-3 "><a href="index.html">Authentication System</a></li>
+                <li class=" py-3 shadow ps-3 s-active"><a href="mailsystem.html">Mail System</a></li>
             </ul>
         </div>
         <div class="col-md-10">
-
             <div class="container py-5">
-                <h1 class="text-center">Authentication system with bootstrap ui</h1>
+                <h1 class="text-center">Send Mail with laravel </h1>
                 <h4>open terminal</h4>
                 <ol>
                     <li>
                         <h5>Create project</h5>
                         <div class="code">
 
-                            <code id="codeToCopy">composer create-project laravel/laravel auth-system</code>
+                            <code id="codeToCopy">composer create-project laravel/laravel mail-system</code>
 
 
                         </div>
@@ -135,163 +134,164 @@
                     <li>
                         <h5>Goto auth-system folder</h5>
                         <div class="code">
-                            <code id="codeToCopy">cd auth-system</code>
+                            <code id="codeToCopy">cd mail-system</code>
 
                         </div>
-                    </li>
-                    <li>
-                        <h5>Open folder in VSCode</h5>
-                        <div class="code"><code>code .</code></div>
-                    </li>
-                    <li>
-                        <h5>create blank database</h5>
-                    </li>
-                    <li>
-                        <h5>Open .env file and database credentials</h5>
-                    </li>
-                    <li>
-                        <h5>Open create user table and add $table-&#62;string('role')-&#62;nullable(); in last</h5>
-                    </li>
-                    <li>
-                        <h5>Run migrate Command</h5>
-                        <div class="code"><code>php artisan migrate</code></div>
-                    </li>
-                    <li>
-                        <h5>Install bootstrap ui</h5>
-                        <div class="code"><code>composer require laravel/ui</code></div>
-                    </li>
-                    <li>
-                        <h5>Generate basic scaffolding</h5>
-                        <div class="code"><code>php artisan ui bootstrap --auth</code></div>
-                    </li>
-                    <li>
-                        <h5>compile your fresh scaffolding</h5>
-                        <div class="code"><code>npm install && npm run dev</code></div>
-                    </li>
-                    <li>
-                        <h5>Open new tab in terminal and press Ctrl + Shift + t</h5>
                     </li>
                     <li>
                         <h5>Run Server</h5>
                         <div class="code"><code>php artisan serve</code></div>
                     </li>
                     <li>
-                        <h5>Create Middleware</h5>
-                        <div class="code"><code>php artisan make:middleware adminMiddleware</code></div>
+                        <h5>Open new tab in terminal and press Ctrl + Shift + t</h5>
                     </li>
                     <li>
-                        <h5>Open Middleware in <strong>app/Http/Middleware/adminMiddleware</strong> and add code</h5>
+                        <h5>Open folder in VSCode</h5>
+                        <div class="code"><code>code .</code></div>
+                    </li>
+                    <li>
+                        <h5>Open .env file and add Mail credentials</h5>
                         <div class="code"><code>
-    <pre>
-    use Illuminate\Support\Facades\Auth;
-    
-    // in handle function
-    if(Auth::check()){
-        if(Auth::user()-&#62;role=="admin"){
-            return $next($request);
-        }
-        else{
-            return redirect('/home')-&#62;with('status','Access Denied! as you are not as admin');
-        }
-    }
-    else{
-        return redirect('/home')-&#62;with('status','Please Login First');
-    }
-    </pre>
-                </code></div>
+<pre>
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.dreamhost.com
+MAIL_PORT=587
+MAIL_USERNAME=info@cybertronindia.com
+MAIL_PASSWORD=BqQ!^uQzIjUFuM8S
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="info@cybertronindia.com"
+MAIL_FROM_NAME="${APP_NAME}"
+</pre>
+                        </code></div>
                     </li>
                     <li>
-                        <h5>Open Kernel.php file in <strong>app/Http/</strong> and add code in protected
-                            $middlewareAliases
-                        </h5>
-                        <div class="code"><code>'isAdmin' => \App\Http\Middleware\AdminMiddleware::class,</code></div>
-                    </li>
-                    <li>
-                        <h5>Open LoginController.php file in <strong>app/Http/Controllers/Auth</strong> and add code
+                        <h5>Create a new folder emails in <strong>resources/views/</strong> and create mail.blade.php
+                            Template
                         </h5>
                         <div class="code"><code>
-    <pre>
-    use Illuminate\Support\Facades\Auth;
-    // protected $redirectTo = RouteServiceProvider::HOME;
-    public function redirectTo()
+                            <pre>
+&#60;!DOCTYPE html&#62;
+&#60;html&#62;
+&#60;head&#62;
+    &#60;title&#62;Send Mail with laravel &#60;/title&#62;
+&#60;/head&#62;
+&#60;body&#62;
+    &#60;h1&#62;{{ $MailData['title'] }}&#60;/h1&#62;
+    &#60;p&#62;{{ $MailData['body'] }}&#60;/p&#62;
+&#60;/body&#62;
+&#60;/html&#62;
+                            </pre>
+                        </code></div>
+                    </li>
+                    <li>
+                        <h5>Create a new mail class</h5>
+                        <div class="code"><code>php artisan make:mail MyTestEmail</code></div>
+                    </li>
+
+                    <li>
+                        <h5>Open mail class in <strong>app/Mail/MyTestEmail.php</strong> and add code</h5>
+                        <div class="code"><code>
+<pre>
+&#60;?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
+
+class MyTestEmail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+        * Create a new message instance.
+        */
+    public $MailData;
+
+    public function __construct($MailData)
     {
-        if(Auth::user()-&#62;role == 'admin') //1 = Admin Login
-        {
-            return 'dashboard';
-        }
-        elseif(Auth::user()-&#62;role == '') // Normal or Default User Login
-        {
-            return '/';
-        }
+        //
+        $this->MailData = $MailData;
     }
-    protected function authenticated()
+
+    /**
+        * Get the message envelope.
+        */
+    public function envelope(): Envelope
     {
-        if(Auth::user()-&#62;role == 'admin') //1 = Admin Login
-        {
-            return redirect('dashboard')-&#62;with('status','Welcome to your dashboard');
-        }
-        elseif(Auth::user()-&#62;role == '') // Normal or Default User Login
-        {
-            return redirect('/')-&#62;with('status','Logged in successfully');
-        }
+        return new Envelope(
+            subject: 'My Test Email',
+        );
     }
-    </pre>
-                    </code></div>
+
+    /**
+        * Get the message content definition.
+        */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.mail',
+        );
+    }
+
+    /**
+        * Get the attachments for the message.
+        *
+        * @return array&#60;int, \Illuminate\Mail\Mailables\Attachment>
+        */
+    public function attachments(): array
+    {
+        return [];
+    }
+}
+</pre>
+                        </code></div>
+                    </li>
+                    <li>
+                        <h5>Create a mail controller</h5>
+                        <div class="code"><code>php artisan make:controller MailController</code></div>
+                    </li>
+                    <li>
+                        <h5>Open MailController.php file in <strong>app/Http/Controllers</strong> and add code</h5>
+                        <div class="code"><code><pre>
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MyTestEmail;
+
+public function index()
+{
+    $MailData = [
+        'title' => 'Test Email',
+        'body' => 'This is the body of test email.'
+    ];
+
+$recipientsCount = Mail::to('mohd131mohsin@gmail.com')->send(new MyTestEmail($MailData));
+dd($recipientsCount);
+
+}
+                        </pre></code></div>
                     </li>
                     <li>
                         <h5>Open web.php and create Routes</h5>
                         <div class="code"><code>
-    <pre>
-    use Illuminate\Support\Facades\Auth;
+        <pre>
+use App\Http\Controllers\MailController;
+
+Route::get('/send-email', [MailController::class, 'index']);
     
-    Auth::routes();
-    Route::group(['middleware' =&#62; ['auth','isAdmin']], function () {
-    
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        });
-        
-    });
-    </pre>
-                    </code></div>
+        </pre>
+                        </code></div>
                     </li>
-                    <li>
-                        <h5>Create admin folder in resources and create dashboard file in admin folder and add code
-                        </h5>
-                        <div class="code"><code>
-    <pre>
-    @extends('layouts.app')
-    
-    @section('content')
-        &#60;div class="container bg-dark"&#62;
-            &#60;div class="row justify-content-center"&#62;
-                &#60;div class="col-md-8"&#62;
-                    &#60;div class="card"&#62;
-                        &#60;div class="card-header"&#62;{{ __('Dashboard') }}	&#60;/div&#62;
-    
-                        &#60;div class="card-body"&#62;
-                        @if (session('status'))
-                                &#60;div class="alert alert-success" role="alert"&#62;
-                                {{ session('status') }}
-                                &#60;/div&#62;
-                        @endif
-    
-                        {{ __('You are logged in!') }}
-                        &#60;/div&#62;
-                    &#60;/div&#62;
-                &#60;/div&#62;
-            &#60;/div&#62;
-        &#60;/div&#62;
-    @endsection
-    
-    </pre>
-                    </code></div>
-                    </li>
+
+
                 </ol>
 
             </div>
         </div>
-
     </div>
 
     <!-- Bootstrap JavaScript Libraries -->
